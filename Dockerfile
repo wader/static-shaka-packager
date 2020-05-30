@@ -1,5 +1,5 @@
 # bump: alpine /FROM alpine:([\d.]+)/ docker:alpine|^3
-FROM alpine:3.11.6 as builder
+FROM alpine:3.12.0 as builder
 RUN \
     apk add --no-cache \
     bash \
@@ -8,7 +8,7 @@ RUN \
     curl \
     git \
     ninja \
-    python \
+    python2 \
     bsd-compat-headers \
     linux-headers \
     libexecinfo-dev
