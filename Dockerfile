@@ -8,7 +8,7 @@ RUN \
     curl \
     git \
     ninja \
-    python \
+    python2 \
     bsd-compat-headers \
     linux-headers \
     libexecinfo-dev
