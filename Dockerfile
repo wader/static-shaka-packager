@@ -14,7 +14,7 @@ RUN \
     libexecinfo-dev
 
 # bump: shaka-packager /SHAKA_PACKAGER_VERSION=([\d.]+)/ git:https://github.com/google/shaka-packager.git|^2
-ARG SHAKA_PACKAGER_VERSION=2.4.2
+ARG SHAKA_PACKAGER_VERSION=2.4.3
 ARG DEPOT_TOOLS_VERSION=71417ad5d3f9365d523ebd088cb87179a27ceb69
 
 # install depot_tools http://www.chromium.org/developers/how-tos/install-depot-tools
