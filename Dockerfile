@@ -1,5 +1,5 @@
 # bump: alpine /FROM alpine:([\d.]+)/ docker:alpine|^3
-FROM alpine:3.13.3 as builder
+FROM alpine:3.13.4 as builder
 RUN \
     apk add --no-cache \
     bash \
@@ -15,7 +15,10 @@ RUN \
 
 # bump: shaka-packager /SHAKA_PACKAGER_VERSION=([\d.]+)/ git:https://github.com/google/shaka-packager.git|^2
 ARG SHAKA_PACKAGER_VERSION=2.4.3
-ARG DEPOT_TOOLS_VERSION=71417ad5d3f9365d523ebd088cb87179a27ceb69
+ARG DEPOT_TOOLS_VERSION=053a717f0231866f372cbb6b226d867c278b1cf0
+# use system python as bundled python does not work on alpine
+ARG DEPOT_TOOLS_BOOTSTRAP_PYTHON3=0
+ARG GCLIENT_PY3=0
 
 # install depot_tools http://www.chromium.org/developers/how-tos/install-depot-tools
 RUN \
@@ -29,13 +32,12 @@ RUN sed -i \
     '/malloc_usable_size/a \\nstruct mallinfo {\n  int arena;\n  int hblkhd;\n  int uordblks;\n};' \
     /usr/include/malloc.h
 
-ENV GCLIENT_PY3=0
 # gpy ninja generator will look at these
-ENV CFLAGS="-O3 -static-libgcc -fno-strict-overflow -fstack-protector-all -fPIE"
-ENV CXXFLAGS="-O3 -static-libgcc -fno-strict-overflow -fstack-protector-all -fPIE"
-ENV LDFLAGS="-static -Wl,-z,relro -Wl,-z,now"
+ARG CFLAGS="-O3 -static-libgcc -fno-strict-overflow -fstack-protector-all -fPIE"
+ARG CXXFLAGS="-O3 -static-libgcc -fno-strict-overflow -fstack-protector-all -fPIE"
+ARG LDFLAGS="-static -Wl,-z,relro -Wl,-z,now"
 # alpine specific config
-ENV GYP_DEFINES="clang=0 use_experimental_allocator_shim=0 use_allocator=none musl=1"
+ARG GYP_DEFINES="clang=0 use_experimental_allocator_shim=0 use_allocator=none musl=1"
 
 WORKDIR /shaka_packager
 RUN gclient config https://www.github.com/google/shaka-packager.git --name=src
