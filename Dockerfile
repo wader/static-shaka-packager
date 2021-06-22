@@ -14,7 +14,7 @@ RUN \
     libexecinfo-dev
 
 # bump: shaka-packager /SHAKA_PACKAGER_VERSION=([\d.]+)/ git:https://github.com/google/shaka-packager.git|^2
-ARG SHAKA_PACKAGER_VERSION=2.5.0
+ARG SHAKA_PACKAGER_VERSION=2.5.1
 ARG DEPOT_TOOLS_VERSION=053a717f0231866f372cbb6b226d867c278b1cf0
 # use system python as bundled python does not work on alpine
 ARG DEPOT_TOOLS_BOOTSTRAP_PYTHON3=0
