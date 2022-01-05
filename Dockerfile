@@ -1,5 +1,5 @@
 # bump: alpine /FROM alpine:([\d.]+)/ docker:alpine|^3
-FROM alpine:3.14.2 AS builder
+FROM alpine:3.15.0 AS builder
 RUN \
     apk add --no-cache \
     bash \
@@ -9,12 +9,15 @@ RUN \
     git \
     ninja \
     python2 \
+    python3 \
     bsd-compat-headers \
     linux-headers \
-    libexecinfo-dev
+    libexecinfo-dev \
+    c-ares-dev \
+    c-ares-static
 
 # bump: shaka-packager /SHAKA_PACKAGER_VERSION=([\d.]+)/ git:https://github.com/google/shaka-packager.git|^2
-ARG SHAKA_PACKAGER_VERSION=2.5.1
+ARG SHAKA_PACKAGER_VERSION=2.6.1
 ARG DEPOT_TOOLS_VERSION=053a717f0231866f372cbb6b226d867c278b1cf0
 # use system python as bundled python does not work on alpine
 ARG DEPOT_TOOLS_BOOTSTRAP_PYTHON3=0
@@ -37,7 +40,9 @@ ARG CFLAGS="-O3 -static-libgcc -fno-strict-overflow -fstack-protector-all -fPIE"
 ARG CXXFLAGS="-O3 -static-libgcc -fno-strict-overflow -fstack-protector-all -fPIE"
 ARG LDFLAGS="-static -Wl,-z,relro -Wl,-z,now"
 # alpine specific config
+# from https://github.com/google/shaka-packager/blob/master/Dockerfile
 ARG GYP_DEFINES="clang=0 use_experimental_allocator_shim=0 use_allocator=none musl=1"
+ARG VPYTHON_BYPASS="manually managed python not supported by chrome operations"
 
 WORKDIR /shaka_packager
 RUN gclient config https://www.github.com/google/shaka-packager.git --name=src
