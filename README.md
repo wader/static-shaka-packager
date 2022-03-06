@@ -1,6 +1,6 @@
 ## static-shaka-packager
 
-Image with shaka-packager binary built as hardened static PIE binaries with no
+Image with [shaka-packager](https://github.com/shaka-project/shaka-packager) binary built as hardened static PIE binaries with no
 external dependencies. Can be used with any base image even scratch.
 
 ### Usage
@@ -8,7 +8,7 @@ external dependencies. Can be used with any base image even scratch.
 COPY --from=mwader/static-shaka-packager:2.5.1 /packager /usr/local/bin/
 ```
 ```sh
-docker run --rm -u $UID:$GROUPS -v "$PWD:$PWD" -w "$PWD" mwader/static-shaka-packager:2.5.1 ...
+docker run --rm -u $UID:$GROUPS -v "$PWD:$PWD" -w "$PWD" mwader/static-shaka-packager:2.6.1 ...
 ```
 
 ### Files in the image
