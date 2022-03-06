@@ -10,6 +10,9 @@ RUN \
     ninja \
     python2 \
     python3 \
+    py3-httplib2 \
+    py3-parsing \
+    py3-six \
     bsd-compat-headers \
     linux-headers \
     libexecinfo-dev \
@@ -21,7 +24,7 @@ ARG SHAKA_PACKAGER_VERSION=2.6.1
 ARG DEPOT_TOOLS_VERSION=053a717f0231866f372cbb6b226d867c278b1cf0
 # use system python as bundled python does not work on alpine
 ARG DEPOT_TOOLS_BOOTSTRAP_PYTHON3=0
-ARG GCLIENT_PY3=0
+ARG GCLIENT_PY3=1
 
 # install depot_tools http://www.chromium.org/developers/how-tos/install-depot-tools
 RUN \
@@ -29,7 +32,7 @@ RUN \
     cd /depot_tools && \
     git checkout $DEPOT_TOOLS_VERSION
 # depot_tools path last so that alpine ninjs is used (depot_tools ninja does not run on alpine atm)
-ENV PATH=$PATH:/depot_tools
+ARG PATH=$PATH:/depot_tools
 
 RUN sed -i \
     '/malloc_usable_size/a \\nstruct mallinfo {\n  int arena;\n  int hblkhd;\n  int uordblks;\n};' \
