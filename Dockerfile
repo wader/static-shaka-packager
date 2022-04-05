@@ -1,5 +1,5 @@
 # bump: alpine /FROM alpine:([\d.]+)/ docker:alpine|^3
-FROM alpine:3.15.3 AS builder
+FROM alpine:3.15.4 AS builder
 RUN \
     apk add --no-cache \
     bash \
